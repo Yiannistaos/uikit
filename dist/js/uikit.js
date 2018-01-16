@@ -398,7 +398,7 @@ function css(element, property, value) {
             var styles = getStyles(element);
 
             return property.reduce(function (props, property) {
-                props[property] = styles[propName(property)];
+                props[property] = propName(styles[property]);
                 return props;
             }, {});
 
@@ -427,7 +427,7 @@ function getCssVar(name) {
 
     if (!(name in vars$1)) {
 
-        /* usage in css: .var-name:before { content:"xyz" } */
+        /* usage in css:  .var-name:before { content:"xyz" } */
 
         var element = append(docEl, doc.createElement('div'));
 
@@ -651,10 +651,10 @@ function position(element) {
         parentOffset = parent === docEl$1(element) ? {top: 0, left: 0} : offset(parent);
 
     return ['top', 'left'].reduce(function (props, prop) {
-        var propName$$1 = ucfirst(prop);
+        var propName = ucfirst(prop);
         props[prop] -= parentOffset[prop]
-            + (toFloat(css(element, ("margin" + propName$$1))) || 0)
-            + (toFloat(css(parent, ("border" + propName$$1 + "Width"))) || 0);
+            + (toFloat(css(element, ("margin" + propName))) || 0)
+            + (toFloat(css(parent, ("border" + propName + "Width"))) || 0);
         return props;
     }, offset(element));
 }
@@ -674,7 +674,7 @@ var height = dimension('height');
 var width = dimension('width');
 
 function dimension(prop) {
-    var propName$$1 = ucfirst(prop);
+    var propName = ucfirst(prop);
     return function (element, value) {
 
         element = toNode(element);
@@ -682,7 +682,7 @@ function dimension(prop) {
         if (isUndefined(value)) {
 
             if (isWindow(element)) {
-                return element[("inner" + propName$$1)];
+                return element[("inner" + propName)];
             }
 
             if (isDocument(element)) {
@@ -691,7 +691,7 @@ function dimension(prop) {
             }
 
             value = css(element, prop);
-            value = value === 'auto' ? element[("offset" + propName$$1)] : toFloat(value) || 0;
+            value = value === 'auto' ? element[("offset" + propName)] : toFloat(value) || 0;
 
             return getContentSize(prop, element, value);
 
@@ -830,11 +830,7 @@ function transition(element, props, duration, timing) {
 
                 clearTimeout(timer);
                 removeClass(element, 'uk-transition');
-                css(element, {
-                    'transition-property': '',
-                    'transition-duration': '',
-                    'transition-timing-function': ''
-                });
+                css(element, 'transition', '');
                 type === 'transitioncanceled' ? reject() : resolve();
             }, false, function (ref) {
                 var target = ref.target;
@@ -843,11 +839,7 @@ function transition(element, props, duration, timing) {
             });
 
             addClass(element, 'uk-transition');
-            css(element, assign({
-                'transition-property': Object.keys(props).map(propName).join(','),
-                'transition-duration': (duration + "ms"),
-                'transition-timing-function': timing
-            }, props));
+            css(element, assign({transition: ("all " + duration + "ms " + timing)}, props));
 
         }); }
     ));
@@ -2447,7 +2439,6 @@ var util = Object.freeze({
 	getStyles: getStyles,
 	getStyle: getStyle,
 	getCssVar: getCssVar,
-	propName: propName,
 	addClass: addClass,
 	removeClass: removeClass,
 	removeClasses: removeClasses,
@@ -10863,7 +10854,6 @@ function plugin$12(UIkit) {
     var attr = util.attr;
     var doc = util.doc;
     var flipPosition = util.flipPosition;
-    var hasAttr = util.hasAttr;
     var includes = util.includes;
     var isTouch = util.isTouch;
     var isVisible = util.isVisible;
@@ -10899,13 +10889,11 @@ function plugin$12(UIkit) {
         },
 
         beforeConnect: function beforeConnect() {
-            this._hasTitle = hasAttr(this.$el, 'title');
             attr(this.$el, {title: '', 'aria-expanded': false});
         },
 
         disconnected: function disconnected() {
             this.hide();
-            attr(this.$el, {title: this._hasTitle ? this.title : null, 'aria-expanded': null});
         },
 
         methods: {
