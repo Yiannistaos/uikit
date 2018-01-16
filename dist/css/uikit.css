@@ -7,6 +7,7 @@
  *    Not using `font` property because a leading hyphen (e.g. -apple-system) causes the font to break in IE11 and Edge
  * 2. Prevent adjustments of font size after orientation changes in IE and iOS.
  * 3. Style
+ */
 html {
   /* 1 */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
