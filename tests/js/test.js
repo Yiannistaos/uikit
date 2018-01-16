@@ -23,8 +23,8 @@ if (request.status === 200) {
 }
 
 var styles = {
-        core: {css: '../dist/css/uikit.yiannistaos-theme.css'},
-        theme: {css: '../dist/css/uikit.yiannistaos-theme.css'}
+        core: {css: '../dist/css/uikit-core.css'},
+        theme: {css: '../dist/css/uikit.css'}
     };
 var component = location.pathname.split('/').pop().replace(/.html$/, '');
 
