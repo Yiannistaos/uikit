@@ -8572,3 +8572,6 @@
 .uk-scope svg {
   vertical-align: middle;
 }
+.uk-scope .uk-accordion-title {
+  cursor: pointer;
+}
