@@ -1,0 +1,18 @@
+- Η διανομή βρίσκεται εδώ 
+
+C:\xampp\htdocs\uikit\
+
+
+- Ο CSS κώδικας του monthlyarchive είναι εδώ C:\xampp\htdocs\uikit\dist\css\uikit.yiannistaos-theme.min.css
+
+- κάνεις τις αλλαγές σου και προσθέτεις css εδώ
+
+C:\xampp\htdocs\uikit\custom\yiannistaos-theme.less
+
+- ΕΝΤΟΛΕΣ
+
+npm install // εγκατάσταση
+
+npm run compile // τρέχεις μετά από κάθε αλλαγή για να σου φτιάξει το αρχείο css μέσα στον dist\css\uikit
+
+npm run scope // για να βάλει το uk-scope ως πρόθεμα για την αποφυγή conflicts
